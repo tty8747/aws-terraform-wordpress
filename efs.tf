@@ -8,7 +8,8 @@ resource "aws_efs_file_system" "wp" {
 }
 
 resource "aws_efs_mount_target" "main" {
-  count          = length(aws_subnet.main.*.id)
-  file_system_id = aws_efs_file_system.wp.id
-  subnet_id      = aws_subnet.main[count.index].id
+  count           = length(aws_subnet.main.*.id)
+  file_system_id  = aws_efs_file_system.wp.id
+  subnet_id       = aws_subnet.main[count.index].id
+  security_groups = [aws_security_group.efs["efs"].id]
 }
