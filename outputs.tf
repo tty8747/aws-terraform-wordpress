@@ -6,3 +6,7 @@ output "instance_ip_addr" {
 output "zones" {
   value = data.aws_availability_zones.available.names.*
 }
+
+output "efs_targets" {
+  value = aws_efs_mount_target.main.*
+}
