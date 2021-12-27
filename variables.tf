@@ -11,7 +11,7 @@ variable "cidr" {
   default = "192.168.7.0/24"
 }
 
-variable "subnet" {
-  type    = string
-  default = "192.168.7.0/25"
+variable "subnets" {
+  type    = list(any)
+  default = ["192.168.7.0/25", "192.168.7.128/25"]
 }

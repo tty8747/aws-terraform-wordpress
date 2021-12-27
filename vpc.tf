@@ -2,16 +2,17 @@ resource "aws_vpc" "main" {
   cidr_block = var.cidr
 
   tags = {
-    name = "main"
+    Name = "main"
   }
 }
 
 resource "aws_subnet" "main" {
+  count             = length(var.subnets)
   vpc_id            = aws_vpc.main.id
-  cidr_block        = var.subnet
-  availability_zone = data.aws_availability_zones.available.names[0]
+  cidr_block        = var.subnets[count.index]
+  availability_zone = data.aws_availability_zones.available.names[count.index]
 
   tags = {
-    name = "main"
+    Name = "main part ${count.index}"
   }
 }
