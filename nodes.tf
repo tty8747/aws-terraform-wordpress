@@ -34,6 +34,7 @@ resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu20.id
   instance_type = "t2.micro"
   key_name      = aws_key_pair.hcypress.id
+  user_data     = data.template_file.init.rendered
 
   network_interface {
     network_interface_id = aws_network_interface.eth[count.index].id
