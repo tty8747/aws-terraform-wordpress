@@ -1,6 +1,12 @@
 variable "cloudflare_email" {}
 variable "cloudflare_api_key" {}
 
+variable "id_rsa_path" {
+  type        = string
+  default     = "~/.ssh/id_rsa.pub"
+  description = "Path to public key"
+}
+
 variable "region" {
   type    = string
   default = "eu-central-1"
@@ -23,4 +29,9 @@ variable "allowed_ports" {
     "efs"  = 2049
     "http" = 80
   }
+}
+
+variable "instances" {
+  type    = list(any)
+  default = ["wp_node01", "wp_node02"]
 }
