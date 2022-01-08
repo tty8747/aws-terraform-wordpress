@@ -13,3 +13,7 @@ resource "aws_efs_mount_target" "main" {
   subnet_id       = aws_subnet.main[count.index].id
   security_groups = [aws_security_group.efs["efs"].id]
 }
+
+resource "aws_efs_access_point" "test" {
+  file_system_id = aws_efs_file_system.wp.id
+}
