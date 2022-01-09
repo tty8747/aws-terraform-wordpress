@@ -22,3 +22,14 @@ provider "cloudflare" {
   email   = var.cloudflare_email
   api_key = var.cloudflare_api_key
 }
+
+module "node" {
+  source              = "./modules/node"
+  av_zone             = "eu-central-1a"
+  external            = aws_subnet.public
+  internal            = aws_subnet.main[0]
+  public_sgroups_ids  = [aws_security_group.ssh.id]
+  private_sgroups_ids = [aws_security_group.rset.id]
+  ami_id              = data.aws_ami.ubuntu20.id
+  key_id              = aws_key_pair.hcypress.id
+}
