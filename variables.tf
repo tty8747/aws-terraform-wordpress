@@ -25,6 +25,15 @@ variable "subnets" {
   # default = ["192.168.7.0/25", "192.168.7.128/25"]
 }
 
+variable "lbsubnets" {
+  type = map(string)
+  default = {
+    "eu-central-1a" = "192.168.10.0/24"
+    "eu-central-1b" = "192.168.20.0/24"
+    "eu-central-1c" = "192.168.30.0/24"
+  }
+}
+
 variable "av_zones" {
   type    = list(string)
   default = ["eu-central-1a", "eu-central-1b"]
@@ -52,11 +61,11 @@ variable "instances" {
 }
 
 variable "wplogin" {
-  type = string
+  type    = string
   default = "wpdb"
 }
 
 variable "wppassword" {
-  type = string
+  type    = string
   default = "wpdbpass"
 }

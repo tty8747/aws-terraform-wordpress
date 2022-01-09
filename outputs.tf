@@ -10,3 +10,7 @@ output "zones" {
 output "efs_targets" {
   value = aws_efs_mount_target.main.*
 }
+
+output "lb_dns_name" {
+  value = module.loadbalancer.lb_dns_name
+}
