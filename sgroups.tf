@@ -1,3 +1,26 @@
+resource "aws_security_group" "ssh" {
+  name   = "ssh"
+  vpc_id = aws_vpc.main.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "for ssh"
+  }
+}
+
 resource "aws_security_group" "rset" {
   name        = "rset"
   description = "Set of rules"
@@ -17,6 +40,16 @@ resource "aws_security_group_rule" "keys" {
   cidr_blocks       = [aws_vpc.main.cidr_block]
   security_group_id = aws_security_group.rset.id
   description       = each.key
+}
+
+resource "aws_security_group_rule" "icmp" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "icmp"
+  cidr_blocks       = [aws_vpc.main.cidr_block]
+  security_group_id = aws_security_group.rset.id
+  description       = "Allow icmp"
 }
 
 resource "aws_security_group_rule" "egress_all" {
