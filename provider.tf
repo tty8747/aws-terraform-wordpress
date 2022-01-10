@@ -48,3 +48,16 @@ module "loadbalancer" {
   private_sgroups_ids = [aws_security_group.rset.id]
   init-script         = data.template_file.init.rendered
 }
+
+module "db" {
+  source         = "./modules/rds"
+  db_engine      = "MariaDB"
+  db_engineVer   = "10.5"
+  db_name        = var.wplogin
+  db_user        = var.wplogin
+  db_pass        = var.wppassword
+  av_zone        = "eu-central-1b"
+  vpc            = aws_vpc.main
+  db_subnet_list = [for i in aws_subnet.main : i.id]
+  s_group        = aws_security_group.rset
+}

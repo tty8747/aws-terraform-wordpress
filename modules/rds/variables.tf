@@ -1,0 +1,9 @@
+variable "db_engine" {}
+variable "db_engineVer" {}
+variable "db_name" {}
+variable "db_user" {}
+variable "db_pass" {}
+variable "av_zone" {}
+variable "vpc" {}
+variable "db_subnet_list" {}
+variable "s_group" {}

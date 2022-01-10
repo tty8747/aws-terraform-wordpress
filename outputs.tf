@@ -14,3 +14,7 @@ output "efs_targets" {
 output "lb_dns_name" {
   value = module.loadbalancer.lb_dns_name
 }
+
+output "db_endpoint" {
+  value = module.db.db_endpoint
+}
