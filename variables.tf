@@ -52,11 +52,11 @@ variable "instances" {
 }
 
 variable "wplogin" {
-  type = string
+  type    = string
   default = "wpdb"
 }
 
 variable "wppassword" {
-  type = string
+  type    = string
   default = "wpdbpass"
 }

@@ -33,3 +33,16 @@ module "node" {
   ami_id              = data.aws_ami.ubuntu20.id
   key_id              = aws_key_pair.hcypress.id
 }
+
+module "db" {
+  source         = "./modules/rds"
+  db_engine      = "MariaDB"
+  db_engineVer   = "10.5"
+  db_name        = var.wplogin
+  db_user        = var.wplogin
+  db_pass        = var.wppassword
+  av_zone        = "eu-central-1b"
+  vpc            = aws_vpc.main
+  db_subnet_list = [for i in aws_subnet.main : i.id]
+  s_group        = aws_security_group.rset
+}

@@ -10,3 +10,7 @@ output "zones" {
 output "efs_targets" {
   value = aws_efs_mount_target.main.*
 }
+
+output "db_endpoint" {
+  value = module.db.db_endpoint
+}

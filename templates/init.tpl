@@ -46,6 +46,7 @@ sudo apt-get  -yq install docker-ce docker-ce-cli containerd.io
 
 export MAINDB="${MAINDB}"
 export PASSWDDB="${PASSWDDB}"
+export WORDPRESS_DB_HOST="${WORDPRESS_DB_HOST}"
 mysql -hwpdb.cluster-ro-c9nmurf5weua.eu-central-1.rds.amazonaws.com -u$MAINDB -p$PASSWDDB -e "CREATE DATABASE $MAINDB;"
 # # mysql -hwpdb.cluster-ro-c9nmurf5weua.eu-central-1.rds.amazonaws.com -uwpdb -p -e "CREATE DATABASE $MAINDB;"
 # mysql -e "CREATE USER $MAINDB@$MAINDB IDENTIFIED BY '$PASSWDDB';"
@@ -64,5 +65,4 @@ sudo docker volume create --opt type=none --opt device=/mnt/efs/wp --opt o=bind 
 # sudo docker volume create --opt type=none --opt device=/mnt/HC_Volume_15900200 --opt o=bind wp
 
 
-# sudo docker run --rm --mount 'source=wp,target=/var/www/html' -p 8080:80 -e WORDPRESS_DB_HOST=65.108.154.35:3306 -e WORDPRESS_DB_USER=$MAINDB -e WORDPRESS_DB_PASSWORD=$PASSWDDB -e WORDPRESS_DB_NAME=wpdb -e WORDPRESS_DEBUG=1 --name wptest -d wordpress
-sudo docker run --rm --mount 'source=wp,target=/var/www/html' -p 8080:80 -e WORDPRESS_DB_HOST=wpdb.cluster-ro-c9nmurf5weua.eu-central-1.rds.amazonaws.com -e WORDPRESS_DB_USER=$MAINDB -e WORDPRESS_DB_PASSWORD=$PASSWDDB -e WORDPRESS_DB_NAME=wpdb -e WORDPRESS_DEBUG=1 --name wptest -d wordpress
+sudo docker run --rm --mount 'source=wp,target=/var/www/html' -p 8080:80 -e WORDPRESS_DB_HOST=$WORDPRESS_DB_HOST -e WORDPRESS_DB_USER=$MAINDB -e WORDPRESS_DB_PASSWORD=$PASSWDDB -e WORDPRESS_DB_NAME=wpdb -e WORDPRESS_DEBUG=1 --name wptest -d wordpress
