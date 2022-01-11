@@ -1,0 +1,12 @@
+variable "lbname" {}
+variable "lbsubnets" {}
+variable "internal_port" {}
+variable "vpc" {}
+variable "target_ids" {}
+variable "ami_id" {}
+variable "key_id" {}
+variable "private_sgroups_ids" {}
+variable "init-script" {}
+variable "gateway" {}
+variable "usefullsubnets" {}
+variable "fqdn" {}
