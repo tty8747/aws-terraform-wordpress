@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-sleep 20
-
 # set -o errexit
 # set -o nounset
 # set -o pipefail
@@ -38,31 +36,14 @@ sudo apt-get  -yq update
 sudo apt-get  -yq install docker-ce docker-ce-cli containerd.io
 
 # MARIADB
-# sudo apt-get  -yq install software-properties-common dirmngr apt-transport-https
-# sudo apt-key adv --fetch-keys 'https://mariadb.org/mariadb_release_signing_key.asc'
-# sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el,s390x] https://mirror.docker.ru/mariadb/repo/10.6/ubuntu focal main'
-# sudo apt -yq update
-# sudo apt -yq install mariadb-server
 
 export MAINDB="${MAINDB}"
 export PASSWDDB="${PASSWDDB}"
 export WORDPRESS_DB_HOST="${WORDPRESS_DB_HOST}"
-mysql -hwpdb.cluster-ro-c9nmurf5weua.eu-central-1.rds.amazonaws.com -u$MAINDB -p$PASSWDDB -e "CREATE DATABASE $MAINDB;"
-# # mysql -hwpdb.cluster-ro-c9nmurf5weua.eu-central-1.rds.amazonaws.com -uwpdb -p -e "CREATE DATABASE $MAINDB;"
-# mysql -e "CREATE USER $MAINDB@$MAINDB IDENTIFIED BY '$PASSWDDB';"
-# mysql -e "GRANT ALL PRIVILEGES ON $MAINDB.* TO '$MAINDB'@'%' IDENTIFIED BY '$PASSWDDB';"
-# mysql -e "FLUSH PRIVILEGES;"
-
-# # sudo usermod -aG docker "$USER" && /usr/bin/env bash
-# sudo systemctl restart mariadb
-
-# /etc/mysql/mariadb.conf.d/50-server.cnf
-# bind-address            = 0.0.0.0
+mysql -h$WORDPRESS_DB_HOST -u$MAINDB -p$PASSWDDB -e "CREATE DATABASE $MAINDB;"
 
 # DOCKER 
 sudo mkdir -pv /mnt/efs/wp
 sudo docker volume create --opt type=none --opt device=/mnt/efs/wp --opt o=bind wp
-# sudo docker volume create --opt type=none --opt device=/mnt/HC_Volume_15900200 --opt o=bind wp
-
 
 sudo docker run --rm --mount 'source=wp,target=/var/www/html' -p 8080:80 -e WORDPRESS_DB_HOST=$WORDPRESS_DB_HOST -e WORDPRESS_DB_USER=$MAINDB -e WORDPRESS_DB_PASSWORD=$PASSWDDB -e WORDPRESS_DB_NAME=wpdb -e WORDPRESS_DEBUG=1 --name wptest -d wordpress

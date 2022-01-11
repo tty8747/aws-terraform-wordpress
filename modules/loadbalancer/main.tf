@@ -11,7 +11,6 @@ resource "aws_lb" "this" {
     Name = var.lbname
   }
 
-
   # lifecycle {
   #   create_before_destroy = true
   # }
@@ -57,7 +56,7 @@ resource "aws_lb_listener_rule" "rule" {
 
   condition {
     host_header {
-      values = ["*.amazonaws.com"]
+      values = ["*.amazonaws.com", var.fqdn]
     }
   }
 
@@ -77,11 +76,11 @@ resource "aws_lb_target_group" "this" {
   health_check {
     path                = "/"
     protocol            = "HTTP"
-    matcher             = "200"
-    interval            = 15
-    timeout             = 3
+    matcher             = "200-299,301,302"
+    interval            = 100
+    timeout             = 30
     healthy_threshold   = 2
-    unhealthy_threshold = 2
+    unhealthy_threshold = 10
   }
 
   stickiness {
@@ -104,8 +103,8 @@ resource "aws_autoscaling_group" "ubuntu20" {
   target_group_arns = [aws_lb_target_group.this.arn]
   health_check_type = "ELB"
 
-  min_size = 2
-  max_size = 3
+  min_size = 1
+  max_size = 2
 
   tag {
     key                 = "Name"
@@ -131,4 +130,3 @@ resource "aws_launch_configuration" "ubuntu20" {
     create_before_destroy = true
   }
 }
-

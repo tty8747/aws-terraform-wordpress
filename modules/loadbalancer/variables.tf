@@ -9,3 +9,4 @@ variable "private_sgroups_ids" {}
 variable "init-script" {}
 variable "gateway" {}
 variable "usefullsubnets" {}
+variable "fqdn" {}

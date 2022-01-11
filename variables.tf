@@ -1,6 +1,11 @@
 variable "cloudflare_email" {}
 variable "cloudflare_api_key" {}
 
+variable "domain" {
+  type    = string
+  default = "ubukubu.ru"
+}
+
 variable "id_rsa_path" {
   type        = string
   default     = "~/.ssh/id_rsa.pub"

@@ -1,12 +1,12 @@
 data "cloudflare_zone" "ubu" {
-  name = "ubukubu.ru"
+  name = var.domain
 }
 
 resource "cloudflare_record" "wp" {
   zone_id = data.cloudflare_zone.ubu.zone_id
-  name    = "wp1"
-  value   = "1.2.3.4"
-  type    = "A"
+  name    = "wp"
+  value   = module.loadbalancer.lb_dns_name
+  type    = "CNAME"
   ttl     = 1
   proxied = true
 }

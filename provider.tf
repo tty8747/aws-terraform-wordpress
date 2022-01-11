@@ -47,6 +47,7 @@ module "loadbalancer" {
   key_id              = aws_key_pair.hcypress.id
   private_sgroups_ids = [aws_security_group.rset.id]
   init-script         = data.template_file.init.rendered
+  fqdn                = cloudflare_record.wp.hostname
 }
 
 module "db" {
